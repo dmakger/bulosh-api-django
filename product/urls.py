@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
+from product.views.detail_product_views import ProductDetailView
 from product.views.product_views import AllProductView
 
 router = DefaultRouter()
@@ -10,4 +11,5 @@ urlpatterns = [
 
     # Продукт
     path("all/", AllProductView.as_view({'get': 'all'})),
+    path('all/<int:pk>/', ProductDetailView.as_view(), name='product-detail'),
 ]

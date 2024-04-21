@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from metric.serializers import AmountUnitSerializer, CategorySerializer
-from product.models import Product, Cart
+from product.models import Product, Cart, ProductToAddedProduct
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -32,11 +32,9 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def get_countAdded(self, instance):
         user = self.context.get('user')
-        print(user)
         if user is None:
             return 0
         cart_qs = Cart.objects.filter(user=user, product=instance)
-        print(cart_qs)
         if len(cart_qs) == 0:
             return 0
         return cart_qs[0].count
@@ -46,3 +44,19 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def get_deletedAt(self, instance):
         return instance.deleted_at
+
+
+# DETAIL
+class ProductDetailSerializer(ProductSerializer):
+    addedProducts = serializers.SerializerMethodField()
+
+    class Meta(ProductSerializer.Meta):
+        fields = ProductSerializer.Meta.fields + ['addedProducts']
+
+    def get_addedProducts(self, instance):
+        added_products = ProductToAddedProduct.objects.filter(product=instance)
+        print(instance, added_products)
+        added_products = [item.added_product for item in added_products]
+        return ProductSerializer(added_products, many=True, context=self.context).data
+
+
