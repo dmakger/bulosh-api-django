@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'mptt',
+    'django_filters',
 
     'ad',
     'metric',
@@ -77,6 +78,9 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.DjangoModelPermissions",),
+    'DEFAULT_FILTER_BACKENDS': [
+            'django_filters.rest_framework.DjangoFilterBackend',
+    ],
 }
 
 

@@ -44,6 +44,7 @@ class ProductToAddedProduct(models.Model):
 class Cart(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name='Пользователь')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
+    count = models.IntegerField('Количество добавленных', default=1)
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
 
     class Meta:
