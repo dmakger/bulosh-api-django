@@ -55,8 +55,5 @@ class ProductDetailSerializer(ProductSerializer):
 
     def get_addedProducts(self, instance):
         added_products = ProductToAddedProduct.objects.filter(product=instance)
-        print(instance, added_products)
         added_products = [item.added_product for item in added_products]
         return ProductSerializer(added_products, many=True, context=self.context).data
-
-

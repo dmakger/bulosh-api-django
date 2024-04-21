@@ -15,7 +15,7 @@ class ProductToAddedProductAdmin(admin.ModelAdmin):
 
 # Корзина
 class CartAdmin(admin.ModelAdmin):
-    list_display = ['user', 'product', 'created_at']
+    list_display = ['user', 'product', 'count', 'created_at']
 
 
 admin.site.register(Product, ProductAdmin)
