@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework_recursive.fields import RecursiveField
 
 from metric.models import AmountUnit, Category, ParentAmountUnit
 from product.models import Product
@@ -28,7 +29,9 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 # Категории
-class AllCategorySerializer(serializers.ModelSerializer):
+class CategoryTreeSerializer(serializers.ModelSerializer):
+    children = RecursiveField(many=True)
+
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ['id', 'name', 'children']
