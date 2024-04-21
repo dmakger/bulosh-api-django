@@ -13,7 +13,7 @@ class Product(models.Model):
     price = models.FloatField('Цена')
     image = models.ImageField(upload_to='media/product/', null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
-    amount = models.IntegerField(verbose_name='Количество')
+    amount = models.FloatField(verbose_name='Количество')
     amount_unit = models.ForeignKey(AmountUnit, on_delete=models.CASCADE, verbose_name='Единица измерения')
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
     deleted_at = models.DateTimeField('Дата удаления', null=True, blank=True)

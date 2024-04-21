@@ -5,7 +5,7 @@ from product.models import Product, ProductToAddedProduct, Cart
 
 # Продукт
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description', 'price', 'category', 'amount', 'amount_unit', 'created_at', 'deleted_at']
+    list_display = ['name', 'price', 'category', 'amount', 'amount_unit', 'created_at', 'deleted_at']
 
 
 # Продукты добавленные во внутрь продукт

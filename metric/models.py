@@ -24,8 +24,8 @@ class AmountUnit(models.Model):
                                help_text="Вес, объем, и т.д.")
 
     class Meta:
-        verbose_name = "Родительская единица измерения"
-        verbose_name_plural = "Родительские единицы измерения"
+        verbose_name = "Единица измерения"
+        verbose_name_plural = "Единицы измерения"
 
     def __str__(self):
         return self.fullname
