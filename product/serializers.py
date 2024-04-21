@@ -31,11 +31,12 @@ class ProductSerializer(serializers.ModelSerializer):
         return AmountUnitSerializer(instance.amount_unit).data
 
     def get_countAdded(self, instance):
-        # print(instance.user)
         user = self.context.get('user')
+        print(user)
         if user is None:
             return 0
         cart_qs = Cart.objects.filter(user=user, product=instance)
+        print(cart_qs)
         if len(cart_qs) == 0:
             return 0
         return cart_qs[0].count

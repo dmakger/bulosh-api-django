@@ -48,8 +48,8 @@ class Cart(models.Model):
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
 
     class Meta:
-        verbose_name = "Продукты внутри продукта"
-        verbose_name_plural = "Продукты внутри продукта"
+        verbose_name = "Корзина"
+        verbose_name_plural = "Корзина"
 
     def __str__(self):
         return f"{self.user} - {self.product} [{self.created_at}]"
