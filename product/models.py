@@ -11,7 +11,7 @@ class Product(models.Model):
     name = models.CharField('Название', max_length=128)
     description = models.TextField('Описание')
     price = models.FloatField('Цена')
-    image = models.ImageField(upload_to='media/product/', null=True, blank=True)
+    image = models.ImageField(upload_to='product/', null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
     amount = models.FloatField(verbose_name='Количество')
     amount_unit = models.ForeignKey(AmountUnit, on_delete=models.CASCADE, verbose_name='Единица измерения')
