@@ -1,11 +1,10 @@
 from django.contrib.auth.models import User
-from rest_framework import generics, permissions, viewsets
+from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework_simplejwt.views import TokenObtainPairView
 
-from user.models import Profile
-from user.serializers import UserRegistrationSerializer, UserSerializer, ProfileSerializer
+from user.serializers import UserRegistrationSerializer, ProfileSerializer
+from user.tasks import send_registration_email
 
 
 # Регистрация
@@ -13,6 +12,11 @@ class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserRegistrationSerializer
     permission_classes = [permissions.AllowAny]
+
+    def perform_create(self, serializer):
+        user = serializer.save()
+        # Получаем email пользователя и отправляем письмо асинхронно
+        send_registration_email.delay(user.email)
 
 
 class CurrentUserView(generics.RetrieveAPIView):
