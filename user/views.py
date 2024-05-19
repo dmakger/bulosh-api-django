@@ -13,10 +13,10 @@ class UserRegistrationView(generics.CreateAPIView):
     serializer_class = UserRegistrationSerializer
     permission_classes = [permissions.AllowAny]
 
-    def perform_create(self, serializer):
-        user = serializer.save()
+    # def perform_create(self, serializer):
+    #     user = serializer.save()
         # Получаем email пользователя и отправляем письмо асинхронно
-        send_registration_email.delay(user.email)
+        # send_registration_email.delay(user.email)
 
 
 class CurrentUserView(generics.RetrieveAPIView):

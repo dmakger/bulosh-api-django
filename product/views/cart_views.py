@@ -1,3 +1,4 @@
+from django.shortcuts import get_list_or_404
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -35,3 +36,19 @@ class CartView(APIView):
 
         serializer = ProductSerializer(cart_item.product, context={'user': request.user.profile})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class CartBuyView(APIView):
+    permission_classes = [IsAuthenticated]  # Только для аутентифицированных пользователей
+
+    def post(self, request, *args, **kwargs):
+        product_ids = request.data.get('products')
+        if not product_ids:
+            return Response({'error': 'No products provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+        cart_qs = Cart.objects.filter(user=request.user.profile, product__id__in=product_ids)
+        if not cart_qs.exists():
+            return Response({'error': 'Таких продуктов нет'}, status=status.HTTP_404_NOT_FOUND)
+
+        cart_qs.delete()
+        return Response({'message': 'Продукты из корзины удалены'}, status=status.HTTP_200_OK)
